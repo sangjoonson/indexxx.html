@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="container">
+  <div class="border-box">  
+    <img id="background" class="Background">
+    <article class="start">
+         <h1 class="mt-5 text-center"> MBTI로 분석하는 <br>나의 투자성향은?</h1>
+         <img id="mainIcon" class="mainicon" src=image/main.png>
+         <div class="startBtn">
+         <button type="button" class="btn btn-outline-warning mt-5" onclick='start();'>테스트하기</button>
+        </div>
+    </article>
+    <article class="question">
+        <div class="progress mt-5">
+            <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"pink aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <h2 id ="title" class="text-center mt-5">문제</h2>
+        <input id="type" type="hidden" value="EI">
+        <div class="bTn">
+        <button id="A" type="button" class="btn btn-warning mt-3">Warning</button>
+        <button id="B" type="button" class="btn btn-warning mt-3">Warning</button>
+        </div>
+    </article>
+    <article class="result">
+        <div class="floatingEmage">
+        <img id="img" class="resultPicture" src="image/main.png" alt="투자자">
+        </div>
+        <h2 id="category" class="text-center mt-3 fs-2">투자유형</h2>
+        <h3 id="explain" class="text-left mt-5">설명</h3>        
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class=" share addthis_inline_share_toolbox"></div>
+
+  </div>        
+    </article>
+    <input type="hidden" id="EI" value="0">
+    <input type="hidden" id="SN" value="0">
+    <input type="hidden" id="TF" value="0">
+    <input type="hidden" id="JP" value="0">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        var num = 1;
+        var q ={
+            1:{"title": "Q1. 당신만 알고있던 회사가 꾸준한 성장을 보이고 있다. 그 때 당신은? ", "type": "EI", "A" : "가까운 지인들에게 빠르게 공유하고 알려준다", "B" :"확실하지 않음으로 더 고민한다"},
+            2:{"title": "Q2. 결국 자신의 판단으로 꾸준하게 투자하여 큰 수익을 얻어 뽐내고 싶은 당신", "type": "EI", "A" : "SNS, 커뮤니티에 수익인증 글을 올려 여러 사람에게 축하받는다", "B" :"가까운 지인들에게만 자랑한다"},
+            3:{"title": "Q3. 투자해야 할 기업을 직접 선택해야 한다면?", "type": "EI", "A" : "직원들 간 소통이 잘되는 가족같은 기업", "B" :"각자의 능력치가 월등히 탁월한 기업"},
+            4:{"title": "Q4. 선택한다면?", "type": "SN", "A" : "지금 당장 1000만원 받기", "B" :"10년뒤 5000만원 받기"},
+            5:{"title": "Q5. 주식투자정보를 받는다면?", "type": "SN", "A" : "오늘 만난 투자전문가", "B" :"매년 대기업 연봉 수익률의 친한 사촌형"},
+            6:{"title": "Q6. 높은 수익을 얻기 위해 본인이 중요하다고 여기는 가치는?", "type": "SN", "A" : "신속한 정보력과 타이밍", "B" :"완벽한 분석력과 인내심"},
+            7:{"title": "Q7. 주식투자 중 본인이 중요하게 생각하는 점은?", "type": "TF", "A" : "수익은 낮아도 원금손실은 없어야 한다", "B" :"조금의 리스크를 감수하고 수익을 올려야 한다"},            
+            8:{"title": "Q8. 당신의 삶을 선택한다면?", "type": "JP", "A" : "안정적인 대기업 사원", "B" :"스타트업 대표"},
+            9:{"title": "Q9. 투자 공부를 본격적으로 시작해보려고 한다. 우선 당신은?", "type": "TF", "A" : "투자비법, 성공사례 등 관련 서적을 찾아본다", "B" :"적은 금액으로 직접 투자하며 감각을 익힌다"},
+            10:{"title": "Q10. 투자실패로 내가 수익을 얻지 못했다면?", "type": "JP", "A" : "배운 점은 많아도 수익없는 투자는 안하는 것만 못하다", "B" :"배운 지식의 값이라고 생각하자"},
+            11:{"title": "Q11. 높은 리스크에 무리하다가 큰 손실을 입게 된다면?", "type": "JP", "A" : "투자는 나랑 안 맞아, 다시는 하지 않는다", "B" :"본인이 실수한 부분을 파악하고 다시 도전한다"},
+            12:{"title": "Q12. 당신이 가치분석하여 투자한 종목이 하락하였다, 당신의 선택은?", "type": "TF", "A" : "분석 실패, 최소한의 금액이라도 손절한다", "B" :"투자는 인내심, 나의 선택을 믿고 기다린다"}
+        }
+        var result = {
+            "ISTJ" : {"category" : "손실이 무서운 수호자형", "explain" : "<ul><li>성향<li>대체로 많은 한국사람들이 속해있으며 본인의 손실을 가장 무서워하는 타입이에요.</li><li>안정적인 투자방식을 선호하며 원금에 집착하다보니 아직까지 큰 돈을 투자하기 겁나요.</li><li>확실한 정보를 늘 원하지만 가끔은 위험을 감수하고서라도 용기있게 투자도 해보는 편이에요. 하지만 투자결과가 좋더라도 그 결과에 도달하기까지의 불안감으로 인한 스트레스 또한 커서 본인의 몫으로 돌아와요.</li></li></br><li>주의사항<li>순발력이 부족하기 때문에 혹했다가는 결국 혼자만 남아 손해보기 쉬워요. 단기매매를 금기해야해요.</li><li>원금손실을 가장 두려워 하기 때문에 손해를 입을 시 정신적으로 크게 무너지기 쉬워요. 자신만의 안전 투자원칙을 반드시 지켜야 해요.</li><li>변동성이 높은 주식보다는 ETF투자나 부동산투자를 추천해요</li></li></ul>", "img" :  "image/fund.png"},
+            "ISFJ" : {"category" : "손실이 무서운 수호자형", "explain" : "<ul><li>성향<li>대체로 많은 한국사람들이 속해있으며 본인의 손실을 가장 무서워하는 타입이에요.</li><li>안정적인 투자방식을 선호하며 원금에 집착하다보니 아직까지 큰 돈을 투자하기 겁나요.</li><li>확실한 정보를 늘 원하지만 가끔은 위험을 감수하고서라도 용기있게 투자도 해보는 편이에요. 하지만 투자결과가 좋더라도 그 결과에 도달하기까지의 불안감으로 인한 스트레스 또한 커서 본인의 몫으로 돌아와요.</li></li></br><li>주의사항<li>순발력이 부족하기 때문에 혹했다가는 결국 혼자만 남아 손해보기 쉬워요. 단기매매를 금기해야해요.</li><li>원금손실을 가장 두려워 하기 때문에 손해를 입을 시 정신적으로 크게 무너지기 쉬워요. 자신만의 안전 투자원칙을 반드시 지켜야 해요.</li><li>변동성이 높은 주식보다는 ETF투자나 부동산투자를 추천해요</li></li></ul>", "img" :  "image/fund.png"},
+            "ESTJ" : {"category" : "손실이 무서운 수호자형", "explain" : "<ul><li>성향<li>대체로 많은 한국사람들이 속해있으며 본인의 손실을 가장 무서워하는 타입이에요.</li><li>안정적인 투자방식을 선호하며 원금에 집착하다보니 아직까지 큰 돈을 투자하기 겁나요.</li><li>확실한 정보를 늘 원하지만 가끔은 위험을 감수하고서라도 용기있게 투자도 해보는 편이에요. 하지만 투자결과가 좋더라도 그 결과에 도달하기까지의 불안감으로 인한 스트레스 또한 커서 본인의 몫으로 돌아와요.</li></li></br><li>주의사항<li>순발력이 부족하기 때문에 혹했다가는 결국 혼자만 남아 손해보기 쉬워요. 단기매매를 금기해야해요.</li><li>원금손실을 가장 두려워 하기 때문에 손해를 입을 시 정신적으로 크게 무너지기 쉬워요. 자신만의 안전 투자원칙을 반드시 지켜야 해요.</li><li>변동성이 높은 주식보다는 ETF투자나 부동산투자를 추천해요</li></li></ul>", "img" :  "image/fund.png"},
+            "ESFJ" : {"category" : "손실이 무서운 수호자형", "explain" : "<ul><li>성향<li>대체로 많은 한국사람들이 속해있으며 본인의 손실을 가장 무서워하는 타입이에요.</li><li>안정적인 투자방식을 선호하며 원금에 집착하다보니 아직까지 큰 돈을 투자하기 겁나요.</li><li>확실한 정보를 늘 원하지만 가끔은 위험을 감수하고서라도 용기있게 투자도 해보는 편이에요. 하지만 투자결과가 좋더라도 그 결과에 도달하기까지의 불안감으로 인한 스트레스 또한 커서 본인의 몫으로 돌아와요.</li></li></br><li>주의사항<li>순발력이 부족하기 때문에 혹했다가는 결국 혼자만 남아 손해보기 쉬워요. 단기매매를 금기해야해요.</li><li>원금손실을 가장 두려워 하기 때문에 손해를 입을 시 정신적으로 크게 무너지기 쉬워요. 자신만의 안전 투자원칙을 반드시 지켜야 해요.</li><li>변동성이 높은 주식보다는 ETF투자나 부동산투자를 추천해요</li></li></ul>", "img" :  "image/fund.png"},
+            "INTJ" : {"category" : "미래를 내다보는 분석가형", "explain" :"<ul><li>성향<li>지피지기면 백전백승! 꾸준한 공부를 통해 불안감을 최소화해야 하는 타입이에요.</li><li>논리적 성향으로 머리가 비상하고 이해력이 빨라 공부나 게임 등에 뛰어나요.</li><li>자신의 분석을 믿고 때로는 거금을 투자하기도 하지만 예측한대로 흘러가지 않아 당황한 적이 많아요.</li></li></br><li>주의사항<li>올바른 투자철학을 가지는 것이 가장 중요해요. 자신만의 철학을 가지되 지나치게 믿지 않아야 해요.</li><li>.</li><li>너무 앞서가려 하지말고 변화하는 트렌드를 읽는 것이 중요해요.</li></li><li>주식 투자 중에는 성장성이 높은 코스닥 종목과 성향이 잘 어울려요.</ul>", "img" :  "image/market-analysis.png"},
+            "INTP" : {"category" : "미래를 내다보는 분석가형", "explain" :"<ul><li>성향<li>지피지기면 백전백승! 꾸준한 공부를 통해 불안감을 최소화해야 하는 타입이에요.</li><li>논리적 성향으로 머리가 비상하고 이해력이 빨라 공부나 게임 등에 뛰어나요.</li><li>자신의 분석을 믿고 때로는 거금을 투자하기도 하지만 예측한대로 흘러가지 않아 당황한 적이 많아요.</li></li></br><li>주의사항<li>올바른 투자철학을 가지는 것이 가장 중요해요. 자신만의 철학을 가지되 지나치게 믿지 않아야 해요.</li><li>.</li><li>너무 앞서가려 하지말고 변화하는 트렌드를 읽는 것이 중요해요.</li></li><li>주식 투자 중에는 성장성이 높은 코스닥 종목과 성향이 잘 어울려요.</ul>", "img" :  "image/market-analysis.png"},           
+            "ENTP" : {"category" : "미래를 내다보는 분석가형", "explain" :"<ul><li>성향<li>지피지기면 백전백승! 꾸준한 공부를 통해 불안감을 최소화해야 하는 타입이에요.</li><li>논리적 성향으로 머리가 비상하고 이해력이 빨라 공부나 게임 등에 뛰어나요.</li><li>자신의 분석을 믿고 때로는 거금을 투자하기도 하지만 예측한대로 흘러가지 않아 당황한 적이 많아요.</li></li></br><li>주의사항<li>올바른 투자철학을 가지는 것이 가장 중요해요. 자신만의 철학을 가지되 지나치게 믿지 않아야 해요.</li><li>.</li><li>너무 앞서가려 하지말고 변화하는 트렌드를 읽는 것이 중요해요.</li></li><li>주식 투자 중에는 성장성이 높은 코스닥 종목과 성향이 잘 어울려요.</ul>", "img" :  "image/market-analysis.png"},
+            "ENTJ" : {"category" : "미래를 내다보는 분석가형", "explain" :"<ul><li>성향<li>지피지기면 백전백승! 꾸준한 공부를 통해 불안감을 최소화해야 하는 타입이에요.</li><li>논리적 성향으로 머리가 비상하고 이해력이 빨라 공부나 게임 등에 뛰어나요.</li><li>자신의 분석을 믿고 때로는 거금을 투자하기도 하지만 예측한대로 흘러가지 않아 당황한 적이 많아요.</li></li></br><li>주의사항<li>올바른 투자철학을 가지는 것이 가장 중요해요. 자신만의 철학을 가지되 지나치게 믿지 않아야 해요.</li><li>.</li><li>너무 앞서가려 하지말고 변화하는 트렌드를 읽는 것이 중요해요.</li></li><li>주식 투자 중에는 성장성이 높은 코스닥 종목과 성향이 잘 어울려요.</ul>", "img" :  "image/market-analysis.png"},
+            "ISTP" : {"category" : "한판승부 도박가형", "explain" :"<ul><li>성향<li> 재테크 중 '주식'이 가장 어울리는 '한판'으로 승부 보기를 좋아하는 승부사 타입이에요. 모의투자대회에서 상을 받은 사람들이 대부분 이 타입이에요.</li><li>반면 크게 손실을 볼 확률도 높기 때문에 깡통계좌를 만들어 나갈 확률이 가장 높은 타입이기도 해요.</li><li>예술가적 성향으로 감각적이며 변해가는 상황을 읽고 대처하는 능력이 뛰어나요.</li></li></br><li>주의사항<li>즉흥적 판단을 절제할 줄 알아야 해요.</li><li>높은 수익보다는 안정성과 손실에 조금 더 신경을 써줘야 해요</li><li>반드시 빚을 지지 말고 자신의 여윳돈으로 투자하는 습관을 길러야 해요</li></ul>", "img" :  "image/slot-machine.png"},
+            "ISFP" : {"category" : "한판승부 도박가형", "explain" :"<ul><li>성향<li> 재테크 중 '주식'이 가장 어울리는 '한판'으로 승부 보기를 좋아하는 승부사 타입이에요. 모의투자대회에서 상을 받은 사람들이 대부분 이 타입이에요.</li><li>반면 크게 손실을 볼 확률도 높기 때문에 깡통계좌를 만들어 나갈 확률이 가장 높은 타입이기도 해요.</li><li>예술가적 성향으로 감각적이며 변해가는 상황을 읽고 대처하는 능력이 뛰어나요.</li></li></br><li>주의사항<li>즉흥적 판단을 절제할 줄 알아야 해요.</li><li>높은 수익보다는 안정성과 손실에 조금 더 신경을 써줘야 해요</li><li>반드시 빚을 지지 말고 자신의 여윳돈으로 투자하는 습관을 길러야 해요</li></ul>", "img" :  "image/slot-machine.png"},
+            "ESTP" : {"category" : "한판승부 도박가형", "explain" :"<ul><li>성향<li> 재테크 중 '주식'이 가장 어울리는 '한판'으로 승부 보기를 좋아하는 승부사 타입이에요. 모의투자대회에서 상을 받은 사람들이 대부분 이 타입이에요.</li><li>반면 크게 손실을 볼 확률도 높기 때문에 깡통계좌를 만들어 나갈 확률이 가장 높은 타입이기도 해요.</li><li>예술가적 성향으로 감각적이며 변해가는 상황을 읽고 대처하는 능력이 뛰어나요.</li></li></br><li>주의사항<li>즉흥적 판단을 절제할 줄 알아야 해요.</li><li>높은 수익보다는 안정성과 손실에 조금 더 신경을 써줘야 해요</li><li>반드시 빚을 지지 말고 자신의 여윳돈으로 투자하는 습관을 길러야 해요</li></ul>", "img" :  "image/slot-machine.png"},
+            "ESFP" : {"category" : "한판승부 도박가형", "explain" :"<ul><li>성향<li> 재테크 중 '주식'이 가장 어울리는 '한판'으로 승부 보기를 좋아하는 승부사 타입이에요. 모의투자대회에서 상을 받은 사람들이 대부분 이 타입이에요.</li><li>반면 크게 손실을 볼 확률도 높기 때문에 깡통계좌를 만들어 나갈 확률이 가장 높은 타입이기도 해요.</li><li>예술가적 성향으로 감각적이며 변해가는 상황을 읽고 대처하는 능력이 뛰어나요.</li></li></br><li>주의사항<li>즉흥적 판단을 절제할 줄 알아야 해요.</li><li>높은 수익보다는 안정성과 손실에 조금 더 신경을 써줘야 해요</li><li>반드시 빚을 지지 말고 자신의 여윳돈으로 투자하는 습관을 길러야 해요</li></ul>", "img" :  "image/slot-machine.png"},
+            "INFP" : {"category" : "꾸준한 망상가형", "explain" : "<ul><li>성향<li>내 자본성장에 애착이 강한 이상적인 타입이에요.</li><li>한 번 투자하면 장기간 보유하려는 성향이 있어요. 장기간 보유하면 성장할 것이라는 믿음으로 따로 공부하고 연구하기를 귀찮아해요. 가끔은 변덕을 부려 보유 종목들을 하루 아침에 갈아치우기도 해요.</li><li>수익률은 높은 편이나 적절한 타이밍을 잡지 못해 수익을 실현하지 못한 경우가 종종 있어요.</li></li></br><li>주의사항<li> 장기간 보유하는 성향에 따라 올바른 종목 선정에 반드시 열정을 쏟아야 해요.</li><li>적절한 수익실현 타이밍을 선정하고 지속적인 관심을 가지고 주시하는 것이 단점을 보완할 수 있어요.</li><li>장기간 보유에 유리한 배당주식이나 적립식 펀드를 추천드려요.</li></ul>", "img" :  "image/decision.png"},
+            "ENFP" : {"category" : "꾸준한 망상가형", "explain" : "<ul><li>성향<li>내 자본성장에 애착이 강한 이상적인 타입이에요.</li><li>한 번 투자하면 장기간 보유하려는 성향이 있어요. 장기간 보유하면 성장할 것이라는 믿음으로 따로 공부하고 연구하기를 귀찮아해요. 가끔은 변덕을 부려 보유 종목들을 하루 아침에 갈아치우기도 해요.</li><li>수익률은 높은 편이나 적절한 타이밍을 잡지 못해 수익을 실현하지 못한 경우가 종종 있어요.</li></li></br><li>주의사항<li> 장기간 보유하는 성향에 따라 올바른 종목 선정에 반드시 열정을 쏟아야 해요.</li><li>적절한 수익실현 타이밍을 선정하고 지속적인 관심을 가지고 주시하는 것이 단점을 보완할 수 있어요.</li><li>장기간 보유에 유리한 배당주식이나 적립식 펀드를 추천드려요.</li></ul>", "img" :  "image/decision.png"},
+            "INFJ" : {"category" : "진득한 무관심형", "explain" : "<ul><li>성향<li>재테크에는 크게 관심이 없는 성향을 지녔어요. 지인의 말따라 돈을 넣어두고 까먹는 경우가 종종 있어요. 세상에는 재밌는 것들이 많다고 생각하는 능동적인 타입이에요. 하지만 돈으로 인한 문제를 겪었거나 상처를 받은 사람이 투자에 뛰어드는 경우가 많아요.</li><li>.</li><li>주도면밀하고 자기 통제력이 강한 성향이기 때문에 큰 손실을 낼 확률은 적어요.</li><li>정의롭고 때때로 오지랖도 넓어서 본인이 아는 정보들을 주변에게 공유하기 좋아해요.</li></li></br><li>주의사항<li>단기매매 보다는 장기적 투자가 더 잘 맞아요.</li><li>변화하는 상황에 따라 유연하게 판단할 수 있어요. 하지만 투자시장은 꾸준히 공부하여야만 해요.</li><li>직접적으로 투자에 뛰어들게 되었다면 과몰입에 주의해야 해요. 잘못하다가는 큰 손실로 이어지기 쉬워요.</li></ul>", "img" :  " "},
+            "ENFJ" : {"category" : "진득한 무관심형", "explain" : "<ul><li>성향<li>재테크에는 크게 관심이 없는 성향을 지녔어요. 지인의 말따라 돈을 넣어두고 까먹는 경우가 종종 있어요. 세상에는 재밌는 것들이 많다고 생각하는 능동적인 타입이에요. 하지만 돈으로 인한 문제를 겪었거나 상처를 받은 사람이 투자에 뛰어드는 경우가 많아요.</li><li>.</li><li>주도면밀하고 자기 통제력이 강한 성향이기 때문에 큰 손실을 낼 확률은 적어요.</li><li>정의롭고 때때로 오지랖도 넓어서 본인이 아는 정보들을 주변에게 공유하기 좋아해요.</li></li></br><li>주의사항<li>단기매매 보다는 장기적 투자가 더 잘 맞아요.</li><li>변화하는 상황에 따라 유연하게 판단할 수 있어요. 하지만 투자시장은 꾸준히 공부하여야만 해요.</li><li>직접적으로 투자에 뛰어들게 되었다면 과몰입에 주의해야 해요. 잘못하다가는 큰 손실로 이어지기 쉬워요.</li></ul>", "img" :  " "},
+        }
+        
+        function start() {
+            $(".start").hide();
+            $(".question").show();
+            next();
+        }
+        $("#A").click(function(){
+           var type = $("#type").val();
+           var preValue = $("#"+type).val();
+           $("#"+type).val(parseInt(preValue)+1);
+           next();
+        });
+        $("#B").click(function(){
+            next();
+        })
+        function next(){
+            if(num == 13){
+                $(".question").hide();
+                $(".result").show();
+                var mbti = "";
+                ($("#EI").val() < 2) ? mbti += "I" : mbti += "E";
+                ($("#SN").val() < 2) ? mbti += "N" : mbti += "S";
+                ($("#TF").val() < 2) ? mbti += "F" : mbti += "T";
+                ($("#JP").val() < 2) ? mbti += "P" : mbti += "J";
+                alert(mbti);
+                $("#img").attr("src", result[mbti]["img"]);
+                $("#category").html(result[mbti]["category"]);
+                $("#explain").html(result[mbti]["explain"]);
+
+
+            } else{
+            $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
+            $("#title").html(q[num]["title"]);
+            $("#type").val(q[num]["type"]);
+            $("#A").html(q[num]["A"]);
+            $("#B").html(q[num]["B"]);
+            num++;
+            
+        }  
+
+        }
+    </script>
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-604e48c202c9f8e1"></script>
+</body>
+</html>
+
+<!-- <div>Icons made by <a href="https://creativemarket.com/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
